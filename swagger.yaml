@@ -1,0 +1,2814 @@
+openapi: 3.0.0
+info:
+  description: ARIA VX Webengine
+  version: 1.0.0
+  title: VX
+servers:
+  - url: http://localhost
+paths:
+  ##############################################################################
+  # Stats Endpoints                                                            #
+  ##############################################################################
+  /info:
+    get:
+      tags:
+        - Info
+      summary: Get Service Info
+      description: Returns info on the running service
+      operationId: GetInfo
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Info"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  ##############################################################################
+  # Stats Endpoints                                                            #
+  ##############################################################################
+  /stats:
+    get:
+      tags:
+        - Stats
+      summary: Get All Stats
+      description: Returns all of the application's stats objects.
+      operationId: GetStats
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetStatsResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /stats/interface:
+    get:
+      tags:
+        - Stats
+      summary: Get All Interface Stats
+      description: Returns the stats objects for all interfaces.
+      operationId: GetInterfaceStats
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InterfaceStatsList"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /stats/interface/{name}:
+    get:
+      tags:
+        - Stats
+      summary: Get Interface Stats by Name
+      description: Returns Interface stats for the given
+        interface name.
+      operationId: GetInterfaceStatsByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InterfaceStats"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /stats/flow-exporter:
+    get:
+      tags:
+        - Stats
+      summary: Get All Flow Exporter Stats
+      description: Returns the stats objects for all flow-exporter exporters.
+      operationId: GetFlowExporterStats
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FlowExporterStatsList"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /stats/flow-exporter/{name}:
+    get:
+      tags:
+        - Stats
+      summary: Get Flow Exporter Stats by Name
+      description: Returns Flow Exporter stats for the given
+        flow-exporter exporter.
+      operationId: GetFlowExporterStatsByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FlowExporterStats"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /stats/flow:
+    get:
+      tags:
+        - Stats
+      summary: Get All Flow Exporter Stats
+      description: Returns the stats objects for all flow engines.
+      operationId: GetFlowStats
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FlowStatsList"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /stats/flow/{name}:
+    get:
+      tags:
+        - Stats
+      summary: Get Flow Stats by Name
+      description: Returns Flow stats for the given
+        flow engine.
+      operationId: GetFlowStatsByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FlowStats"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /stats/pipeline:
+    get:
+      tags:
+        - Stats
+      summary: Get All Pipeline Stats
+      description: Returns the stats objects for all pipelines.
+      operationId: GetPipelineStats
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PipelineStatsList"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /stats/pipeline/{name}:
+    get:
+      tags:
+        - Stats
+      summary: Get Pipeline Stats by Name
+      description: Returns stats for the given pipeline.
+      operationId: GetPipelineStatsByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PipelineStats"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /stats/rule:
+    get:
+      tags:
+        - Stats
+      summary: Get All Rule Exporter Stats
+      description: Returns the stats objects for all rule engines.
+      operationId: GetRuleStats
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RuleStatsList"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /stats/rule/{name}:
+    get:
+      tags:
+        - Stats
+      summary: Get Rule Stats by Name
+      description: Returns Rule stats for the given
+        rule engine.
+      operationId: GetRuleStatsByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RuleStats"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /stats/hw:
+    get:
+      tags:
+        - Stats
+      summary: Get All HW Stats
+      description: Returns the stats objects for all hw interfaces.
+      operationId: GetHWStats
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HWStatsList"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /stats/hw/{name}:
+    get:
+      tags:
+        - Stats
+      summary: Get HW Stats by Name
+      description: Returns HW stats for the given
+        hw interface.
+      operationId: GetHWStatsByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HWStats"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  ##############################################################################
+  # Config Flow Exporter Endpoints                                             #
+  ##############################################################################
+  /config/flow-exporter:
+    post:
+      tags:
+        - ConfigFlowExporter
+      summary: Create a new Flow Exporter config.
+      description: Create or update a Flow Exporter config. Flow Exporter
+        configs are indexed by their name field.
+      operationId: PostFlowExporterConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FlowExporter"
+      responses:
+        201:
+          description: Created
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      tags:
+        - ConfigFlowExporter
+      summary: Update an existing Flow Exporter config.
+      description: Update an existing flow exporter config. Returns HTTP 404
+        if an invalid name is given.
+      operationId: PutFlowExporterConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FlowExporter"
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - ConfigFlowExporter
+      summary: Delete all existing Flow Exporter configs.
+      description: Delete all existing flow exporter configs. This is an
+        idempotent operation and deletes on an empty config will return
+        HTTP 200.
+      operationId: DeleteFlowExporterConfig
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      tags:
+        - ConfigFlowExporter
+      summary: Get All Flow Exporter Configs
+      description: Returns all of the flow exporter configurations.
+      operationId: GetFlowExporterConfig
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FlowExporterList"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /config/flow-exporter/{name}:
+    get:
+      tags:
+        - ConfigFlowExporter
+      summary: Get Flow Exporter Config by Name
+      description: Returns the matching flow exporter object.
+      operationId: GetFlowExporterConfigByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FlowExporter"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - ConfigFlowExporter
+      summary: Delete Flow Exporter config by Name.
+      description: Delete an existing flow exporter config. This is an
+        idempotent operation and deletes on a non existing config objects will
+        return HTTP 200.
+      operationId: DeleteFlowExporterConfigByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  ##############################################################################
+  # Config Pattern Endpoints                                                   #
+  ##############################################################################
+  /config/pattern:
+    post:
+      tags:
+        - ConfigPattern
+      summary: Create a new Pattern config.
+      description: Create or update a Pattern config. Pattern
+        configs are indexed by their name field.
+      operationId: PostPatternConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Pattern"
+      responses:
+        201:
+          description: Created
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      tags:
+        - ConfigPattern
+      summary: Update an existing Pattern config.
+      description: Update an existing pattern config. Returns HTTP 404
+        if an invalid name is given.
+      operationId: PutPatternConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Pattern"
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - ConfigPattern
+      summary: Delete all existing Pattern configs.
+      description: Delete all existing pattern configs. This is an
+        idempotent operation and deletes on an empty config will return
+        HTTP 200.
+      operationId: DeletePatternConfig
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      tags:
+        - ConfigPattern
+      summary: Get All Pattern Configs
+      description: Returns all of the pattern configurations.
+      operationId: GetPatternConfig
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PatternList"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /config/pattern/{name}:
+    get:
+      tags:
+        - ConfigPattern
+      summary: Get Pattern Config by Name
+      description: Returns the matching pattern object.
+      operationId: GetPatternConfigByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pattern"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - ConfigPattern
+      summary: Delete Pattern config by Name.
+      description: Delete an existing pattern config. This is an
+        idempotent operation and deletes on a non existing config objects will
+        return HTTP 200.
+      operationId: DeletePatternConfigByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  ##############################################################################
+  # Config Action Endpoints                                                    #
+  ##############################################################################
+  /config/action:
+    post:
+      tags:
+        - ConfigAction
+      summary: Create a new Action config.
+      description: Create or update a Action config. Action
+        configs are indexed by their name field.
+      operationId: PostActionConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Action"
+      responses:
+        201:
+          description: Created
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      tags:
+        - ConfigAction
+      summary: Update an existing Action config.
+      description: Update an existing action config. Returns HTTP 404
+        if an invalid name is given.
+      operationId: PutActionConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Action"
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - ConfigAction
+      summary: Delete all existing Action configs.
+      description: Delete all existing action configs. This is an
+        idempotent operation and deletes on an empty config will return
+        HTTP 200.
+      operationId: DeleteActionConfig
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      tags:
+        - ConfigAction
+      summary: Get All Action Configs
+      description: Returns all of the action configurations.
+      operationId: GetActionConfig
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ActionList"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /config/action/{name}:
+    get:
+      tags:
+        - ConfigAction
+      summary: Get Action Config by Name
+      description: Returns the matching action object.
+      operationId: GetActionConfigByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Action"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - ConfigAction
+      summary: Delete Action config by Name.
+      description: Delete an existing action config. This is an
+        idempotent operation and deletes on a non existing config objects will
+        return HTTP 200.
+      operationId: DeleteActionConfigByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  ##############################################################################
+  # Config Rule Endpoints                                                      #
+  ##############################################################################
+  /config/rule:
+    post:
+      tags:
+        - ConfigRule
+      summary: Create a new Rule config.
+      description: Create or update a Rule config. Rule
+        configs are indexed by their name field.
+      operationId: PostRuleConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Rule"
+      responses:
+        201:
+          description: Created
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      tags:
+        - ConfigRule
+      summary: Update an existing Rule config.
+      description: Update an existing rule config. Returns HTTP 404
+        if an invalid name is given.
+      operationId: PutRuleConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Rule"
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - ConfigRule
+      summary: Delete all existing Rule configs.
+      description: Delete all existing rule configs. This is an
+        idempotent operation and deletes on an empty config will return
+        HTTP 200.
+      operationId: DeleteRuleConfig
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      tags:
+        - ConfigRule
+      summary: Get All Rule Configs
+      description: Returns all of the rule configurations.
+      operationId: GetRuleConfig
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RuleList"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /config/rule/{name}:
+    get:
+      tags:
+        - ConfigRule
+      summary: Get Rule Config by Name
+      description: Returns the matching rule object.
+      operationId: GetRuleConfigByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Rule"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - ConfigRule
+      summary: Delete Rule config by Name.
+      description: Delete an existing rule config. This is an
+        idempotent operation and deletes on a non existing config objects will
+        return HTTP 200.
+      operationId: DeleteRuleConfigByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  ##############################################################################
+  # Config Interface Endpoints                                                 #
+  ##############################################################################
+  /config/interface:
+    post:
+      tags:
+        - ConfigInterface
+      summary: Create a new Interface config.
+      description: Create or update a Interface config. Interface
+        configs are indexed by their name field.
+      operationId: PostInterfaceConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InterfaceConfig"
+      responses:
+        201:
+          description: Created
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      tags:
+        - ConfigInterface
+      summary: Update an existing Interface config.
+      description: Update an existing interface config. Returns HTTP 404
+        if an invalid name is given.
+      operationId: PutInterfaceConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InterfaceConfig"
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - ConfigInterface
+      summary: Delete all existing Interface configs.
+      description: Delete all existing interface configs. This is an
+        idempotent operation and deletes on an empty config will return
+        HTTP 200.
+      operationId: DeleteInterfaceConfig
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      tags:
+        - ConfigInterface
+      summary: Get All Interface Configs
+      description: Returns all of the interface configurations.
+      operationId: GetInterfaceConfig
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InterfaceConfigList"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /config/interface/{name}:
+    get:
+      tags:
+        - ConfigInterface
+      summary: Get Interface Config by Name
+      description: Returns the matching interface object.
+      operationId: GetInterfaceConfigByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InterfaceConfig"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - ConfigInterface
+      summary: Delete Interface config by Name.
+      description: Delete an existing interface config. This is an
+        idempotent operation and deletes on a non existing config objects will
+        return HTTP 200.
+      operationId: DeleteInterfaceConfigByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  ##############################################################################
+  # Interface Info Endpoints                                                   #
+  ##############################################################################
+  /interface/info:
+    get:
+      tags:
+        - InterfaceInfo
+      summary: Get All Interfaces
+      description: Returns the objects for all interfaces.
+      operationId: GetInterfaceInfo
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InterfaceInfoList"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /interface/info/{name}:
+    get:
+      tags:
+        - InterfaceInfo
+      summary: Get Interface by Name
+      description: Returns interface for the given
+        interface name.
+      operationId: GetInterfaceInfoByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InterfaceInfo"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  ##############################################################################
+  # SIEM Endpoints                                                             #
+  ##############################################################################
+  /SIEM/config:
+    put:
+      tags:
+        - SIEM
+      summary: Configure the SIEM Service
+      description: Updates the SIEM Service Configuration.
+      operationId: PutSIEMConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SIEMConfig"
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      tags:
+        - SIEM
+      summary: Get the SIEM Configuration
+      description: Returns the SIEM Configuration
+      operationId: GetSIEMConfig
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SIEMConfig"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  ##############################################################################
+  # Policy Endpoints                                                           #
+  ##############################################################################
+  /policy/config:
+    put:
+      tags:
+        - Policy
+      summary: Configure the service's policy object.
+      description: Updates the service's policy object.
+      operationId: PutPolicyConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PolicyConfig"
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      tags:
+        - Policy
+      summary: Get the service's policy object.
+      description: Returns the service's policy object.
+      operationId: GetPolicyConfig
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PolicyConfig"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  ##############################################################################
+  # Floorplan Endpoints                                                        #
+  ##############################################################################
+  /floorplan/config:
+    put:
+      tags:
+        - Floorplan
+      summary: Configure the service's floorplan
+      description: Updates the service's floorplan
+      operationId: PutFloorplanConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FloorplanConfig"
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      tags:
+        - Floorplan
+      summary: Get the service's floorplan
+      description: Returns the service's floorplan
+      operationId: GetFloorplanConfig
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FloorplanConfig"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  ##############################################################################
+  # Control Endpoints                                                          #
+  ##############################################################################
+  /control/restart:
+    put:
+      tags:
+        - Control
+      summary: Restart the running service
+      description: Restarts the running service
+      operationId: PutControlRestart
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  ##############################################################################
+  # Config Flow Manager Endpoints                                              #
+  ##############################################################################
+  /config/flow-manager:
+    post:
+      tags:
+        - ConfigFlowManager
+      summary: Create a new FlowManager config.
+      description: Create or update a FlowManager config. FlowManager
+        configs are indexed by their name field.
+      operationId: PostFlowManagerConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FlowManagerConfig"
+      responses:
+        201:
+          description: Created
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      tags:
+        - ConfigFlowManager
+      summary: Update an existing FlowManager config.
+      description: Update an existing flow-manager config. Returns HTTP 404
+        if an invalid name is given.
+      operationId: PutFlowManagerConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FlowManagerConfig"
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - ConfigFlowManager
+      summary: Delete all existing FlowManager configs.
+      description: Delete all existing flow-manager configs. This is an
+        idempotent operation and deletes on an empty config will return
+        HTTP 200.
+      operationId: DeleteFlowManagerConfig
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      tags:
+        - ConfigFlowManager
+      summary: Get All FlowManager Configs
+      description: Returns all of the flow-manager configurations.
+      operationId: GetFlowManagerConfig
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FlowManagerConfigList"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /config/flow-manager/{name}:
+    get:
+      tags:
+        - ConfigFlowManager
+      summary: Get FlowManager Config by Name
+      description: Returns the matching flow-manager object.
+      operationId: GetFlowManagerConfigByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FlowManagerConfig"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - ConfigFlowManager
+      summary: Delete FlowManager config by Name.
+      description: Delete an existing flow-manager config. This is an
+        idempotent operation and deletes on a non existing config objects will
+        return HTTP 200.
+      operationId: DeleteFlowManagerConfigByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  ##############################################################################
+  # Config Worker Endpoints                                                    #
+  ##############################################################################
+  /config/worker:
+    post:
+      tags:
+        - ConfigWorker
+      summary: Create a new Worker config.
+      description: Create or update a Worker config. Worker
+        configs are indexed by their name field.
+      operationId: PostWorkerConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WorkerConfig"
+      responses:
+        201:
+          description: Created
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      tags:
+        - ConfigWorker
+      summary: Update an existing Worker config.
+      description: Update an existing worker config. Returns HTTP 404
+        if an invalid name is given.
+      operationId: PutWorkerConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WorkerConfig"
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - ConfigWorker
+      summary: Delete all existing Worker configs.
+      description: Delete all existing worker configs. This is an
+        idempotent operation and deletes on an empty config will return
+        HTTP 200.
+      operationId: DeleteWorkerConfig
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      tags:
+        - ConfigWorker
+      summary: Get All Worker Configs
+      description: Returns all of the worker configurations.
+      operationId: GetWorkerConfig
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WorkerConfigList"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /config/worker/{name}:
+    get:
+      tags:
+        - ConfigWorker
+      summary: Get Worker Config by Name
+      description: Returns the matching worker object.
+      operationId: GetWorkerConfigByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WorkerConfig"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - ConfigWorker
+      summary: Delete Worker config by Name.
+      description: Delete an existing worker config. This is an
+        idempotent operation and deletes on a non existing config objects will
+        return HTTP 200.
+      operationId: DeleteWorkerConfigByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  ##############################################################################
+  # Config Exporter Endpoints                                                  #
+  ##############################################################################
+  /config/exporter:
+    post:
+      tags:
+        - ConfigExporter
+      summary: Create a new Exporter config.
+      description: Create or update a Exporter config. Exporter
+        configs are indexed by their name field.
+      operationId: PostExporterConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExporterConfig"
+      responses:
+        201:
+          description: Created
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      tags:
+        - ConfigExporter
+      summary: Update an existing Exporter config.
+      description: Update an existing exporter config. Returns HTTP 404
+        if an invalid name is given.
+      operationId: PutExporterConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExporterConfig"
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - ConfigExporter
+      summary: Delete all existing Exporter configs.
+      description: Delete all existing exporter configs. This is an
+        idempotent operation and deletes on an empty config will return
+        HTTP 200.
+      operationId: DeleteExporterConfig
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      tags:
+        - ConfigExporter
+      summary: Get All Exporter Configs
+      description: Returns all of the exporter configurations.
+      operationId: GetExporterConfig
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExporterConfigList"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /config/exporter/{name}:
+    get:
+      tags:
+        - ConfigExporter
+      summary: Get Exporter Config by Name
+      description: Returns the matching exporter object.
+      operationId: GetExporterConfigByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExporterConfig"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - ConfigExporter
+      summary: Delete Exporter config by Name.
+      description: Delete an existing exporter config. This is an
+        idempotent operation and deletes on a non existing config objects will
+        return HTTP 200.
+      operationId: DeleteExporterConfigByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  ##############################################################################
+  # Config Core Endpoints                                                      #
+  ##############################################################################
+  /config/core:
+    post:
+      tags:
+        - ConfigCore
+      summary: Create a new Core config.
+      description: Create or update a Core config. Core
+        configs are indexed by their name field.
+      operationId: PostCoreConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CoreConfig"
+      responses:
+        201:
+          description: Created
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      tags:
+        - ConfigCore
+      summary: Update an existing Core config.
+      description: Update an existing core config. Returns HTTP 404
+        if an invalid name is given.
+      operationId: PutCoreConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CoreConfig"
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - ConfigCore
+      summary: Delete all existing Core configs.
+      description: Delete all existing core configs. This is an
+        idempotent operation and deletes on an empty config will return
+        HTTP 200.
+      operationId: DeleteCoreConfig
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      tags:
+        - ConfigCore
+      summary: Get All Core Configs
+      description: Returns all of the core configurations.
+      operationId: GetCoreConfig
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CoreConfigList"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /config/core/{name}:
+    get:
+      tags:
+        - ConfigCore
+      summary: Get Core Config by Name
+      description: Returns the matching core object.
+      operationId: GetCoreConfigByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CoreConfig"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - ConfigCore
+      summary: Delete Core config by Name.
+      description: Delete an existing core config. This is an
+        idempotent operation and deletes on a non existing config objects will
+        return HTTP 200.
+      operationId: DeleteCoreConfigByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  ##############################################################################
+  # Config BPF Endpoints                                                       #
+  ##############################################################################
+  /config/bpf:
+    post:
+      tags:
+        - ConfigBPF
+      summary: Create a new BPF config.
+      description: Create or update a BPF config. BPF
+        configs are indexed by their name field.
+      operationId: PostBPFConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BPF"
+      responses:
+        201:
+          description: Created
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      tags:
+        - ConfigBPF
+      summary: Update an existing BPF config.
+      description: Update an existing bpf config. Returns HTTP 404
+        if an invalid name is given.
+      operationId: PutBPFConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BPF"
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - ConfigBPF
+      summary: Delete all existing BPF configs.
+      description: Delete all existing bpf configs. This is an
+        idempotent operation and deletes on an empty config will return
+        HTTP 200.
+      operationId: DeleteBPFConfig
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      tags:
+        - ConfigBPF
+      summary: Get All BPF Configs
+      description: Returns all of the bpf configurations.
+      operationId: GetBPFConfig
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BPFList"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /config/bpf/{name}:
+    get:
+      tags:
+        - ConfigBPF
+      summary: Get BPF Config by Name
+      description: Returns the matching bpf object.
+      operationId: GetBPFConfigByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BPF"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+        - ConfigBPF
+      summary: Delete BPF config by Name.
+      description: Delete an existing bpf config. This is an
+        idempotent operation and deletes on a non existing config objects will
+        return HTTP 200.
+      operationId: DeleteBPFConfigByName
+      parameters:
+        - name: name
+          in: path
+          description: Name to match against.
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+    ErrorResponse:
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: A general message that corresponds with the error.
+    GetStatsResponse:
+      properties:
+        interface_stats:
+          $ref: "#/components/schemas/InterfaceStatsList"
+        flow_exporter_stats:
+          $ref: "#/components/schemas/FlowExporterStatsList"
+        flow_stats:
+          $ref: "#/components/schemas/FlowStatsList"
+        pipeline_stats:
+          $ref: "#/components/schemas/PipelineStatsList"
+        rule_stats:
+          $ref: "#/components/schemas/RuleStatsList"
+        hw_stats:
+          $ref: "#/components/schemas/HWStatsList"
+    InterfaceStatsList:
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/InterfaceStats"
+    InterfaceStats:
+      properties:
+        name:
+          description: The name of the interface these stats belong to
+          type: string
+        timestamp:
+          description: Epoch time in microseconds
+          type: integer
+          format: uint64
+        link_change:
+          description: A timestamp of the last known link change event
+          type: integer
+          format: uint64
+        status:
+          description: The status of the link associated with this interface
+            at the time this status was retrieved
+          type: string
+          enum:
+            - up
+            - down
+        speed:
+          description: The speed of the interface at the time this status was retrieved
+          type: integer
+        rx:
+          $ref: "#/components/schemas/InterfaceStatsRx"
+        tx:
+          $ref: "#/components/schemas/InterfaceStatsTx"
+        hw:
+          $ref: "#/components/schemas/InterfaceStatsHWList"
+    InterfaceStatsRx:
+      description: Interface Rx Stats
+      properties:
+        packets:
+          description: Total number of successfully received packets
+          type: integer
+          format: uint64
+        bytes:
+          description: Total number of successfully received bytes
+          type: integer
+          format: uint64
+        missed:
+          description: Total number of packets dropped by the HW
+          type: integer
+          format: uint64
+        error:
+          description: Total number of erroneous received packets
+          type: integer
+          format: uint64
+        no_buf:
+          description: Total buffer allocation failures
+          type: integer
+          format: uint64
+    InterfaceStatsTx:
+      description: Interface Tx Stats
+      properties:
+        packets:
+          description: Total number of successfully transmitted packets
+          type: integer
+          format: uint64
+        bytes:
+          description: Total number of successfully transmitted bytes
+          type: integer
+          format: uint64
+        error:
+          description: Total number of unsuccessfully transmitted bytes
+          type: integer
+          format: uint64
+    InterfaceStatsHW:
+      description: Interface Rx Stats
+      properties:
+        name:
+          description: The name of the statistic
+          type: string
+        value:
+          description: Value of the statistic
+          type: integer
+          format: uint64
+    InterfaceStatsHWList:
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/InterfaceStatsHW"
+    RuleStatsList:
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/RuleStats"
+    RuleStats:
+      description: >-
+        This is the definition of a rule stat object.
+      required:
+        - name
+      properties:
+        name:
+          description: The name of the instance
+          type: string
+        timestamp:
+          description: Epoch time in microseconds
+          type: integer
+          format: uint64
+        id:
+          type: integer
+          format: uint64
+        stats:
+          $ref: "#/components/schemas/RuleInterfaceStatsList"
+    RuleInterfaceStatsList:
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/RuleInterfaceStats"
+    RuleInterfaceStats:
+      description: >-
+        This is the definition of a rule stat object.
+      required:
+        - name
+      properties:
+        name:
+          description: Interface name
+          type: string
+        id:
+          description: Flow Id to be used in conjunction with the Rule Id.
+          type: integer
+          format: uint16
+        timestamp:
+          description: Epoch time in microseconds
+          type: integer
+          format: uint64
+        packets:
+          description: Total number matched packets
+          type: integer
+          format: uint64
+        bytes:
+          description: Total number matched bytes
+          type: integer
+          format: uint64
+    FlowExporterStatsList:
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/FlowExporterStats"
+    FlowExporterStats:
+      properties:
+        name:
+          type: string
+        timestamp:
+          description: Epoch time in microseconds
+          type: integer
+          format: uint64
+        received:
+          type: integer
+          format: uint64
+        enqueued:
+          type: integer
+          format: uint64
+        dropped:
+          type: integer
+          format: uint64
+        emitted:
+          type: integer
+          format: uint64
+    FlowStatsList:
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/FlowStats"
+    FlowStats:
+      properties:
+        name:
+          type: string
+        timestamp:
+          description: Epoch time in microseconds
+          type: integer
+          format: uint64
+        created:
+          type: integer
+          format: uint64
+          description: The number of flows created
+        dropped:
+          type: integer
+          format: uint64
+          description: The number of flows dropped due to being out of resouces
+        lifetime:
+          type: integer
+          format: uint64
+          description: The number of flows emmited for reaching the maximum flow life time setting
+        idle:
+          type: integer
+          format: uint64
+          description: The number of flows emmited for reaching the maximum flow idle time setting
+        oldest:
+          type: integer
+          format: uint64
+          description: The number of flows emmited early due to resource constraints
+    PipelineStatsList:
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/PipelineStats"
+    PipelineStats:
+      properties:
+        name:
+          type: string
+        timestamp:
+          description: Epoch time in microseconds
+          type: integer
+          format: uint64
+        packets:
+          type: integer
+          format: uint64
+        bytes:
+          type: integer
+          format: uint64
+        packets_dropped:
+          type: integer
+          format: uint64
+        bytes_dropped:
+          type: integer
+          format: uint64
+        flows_dropped:
+          type: integer
+          format: uint64
+    FlowEngineStatsList:
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/FlowEngineStats"
+    FlowEngineStats:
+      properties:
+        name:
+          type: string
+        timestamp:
+          description: Epoch time in microseconds
+          type: integer
+          format: uint64
+        packets:
+          type: integer
+          format: uint64
+        bytes:
+          type: integer
+          format: uint64
+    HWStatsList:
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/HWStats"
+    HWStats:
+      properties:
+        name:
+          description: Interface name
+          type: string
+        timestamp:
+          description: Epoch time in microseconds
+          type: integer
+          format: uint64
+        packets:
+          type: integer
+          format: uint64
+        bytes:
+          type: integer
+          format: uint64
+    FlowExporterList:
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/FlowExporter"
+    FlowExporter:
+      description: A flow exporter object contains a definition of one of many
+        possibly flow exproter types. A flow exproter object is keyed by its
+        name and the name must be unique.
+      required:
+        - name
+        - application
+        - format
+      properties:
+        name:
+          type: string
+        enable:
+          type: boolean
+        mtu:
+          type: integer
+          format: uint16
+        application:
+          type: string
+          enum:
+            - none
+            - http
+            - syslog
+        format:
+          type: string
+          enum:
+            - v5
+            - v9
+            - ipfix
+            - cef
+            - json
+            - carbon2
+            - graphite
+        http_config:
+          $ref: "#/components/schemas/HTTPConfig"
+        syslog_config:
+          $ref: "#/components/schemas/SyslogConfig"
+        socket_config:
+          $ref: "#/components/schemas/SocketConfig"
+    HTTPConfig:
+      properties:
+        url:
+          type: string
+        headers:
+          type: array
+          items:
+            type: string
+    SocketConfig:
+      required:
+        - address
+        - port
+        - transport
+      properties:
+        address:
+          type: string
+        dst_port:
+          type: integer
+          format: uint16
+        transport:
+          type: string
+          enum:
+            - tcp
+            - udp
+    SyslogConfig:
+      properties:
+        token:
+          type: string
+        severity:
+          type: integer
+          format: uint8
+          minimum: 0
+          maximum: 7
+        facility:
+          type: integer
+          format: uint8
+          minimum: 0
+          maximum: 23
+    PatternList:
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Pattern"
+    Pattern:
+      description: This is the definition of a pattern object.
+      required:
+        - name
+      properties:
+        name:
+          description: The name of the instance
+          type: string
+        pattern:
+          description: The BPF syntax used to match packets
+          type: string
+        interface:
+          description: The interface that this pattern is to be applied to
+          type: string
+    ActionList:
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Action"
+    Action:
+      description: >-
+        This is the definition of an Action object.
+      required:
+        - name
+        - action
+      properties:
+        name:
+          description: The name of the action instance
+          type: string
+        action:
+          description: The action to apply
+          type: string
+    RuleList:
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Rule"
+    Rule:
+      description: >-
+        This is the definition of a rule object.
+      required:
+        - name
+        - patterns
+        - actions
+      properties:
+        name:
+          description: The name of the instance
+          type: string
+        patterns:
+          description: The list of associated patterns
+          type: array
+          minItems: 1
+          items:
+            type: string
+            description: Name of a pattern to be associated with this rule
+        actions:
+          description: The list of associated actions
+          type: array
+          minItems: 1
+          items:
+            type: string
+            description: Name of an action to be associated with this rule
+    InterfaceConfigList:
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/InterfaceConfig"
+    InterfaceConfig:
+      description: >-
+        This is the definition of an interface object.
+      properties:
+        name:
+          type: string
+        peer:
+          description: The name of an interface to be associated with
+          type: string
+        MTU:
+          description: Interface MTU
+          type: integer
+          format: uint16
+          minimum: 0
+          maximum: 65535
+        mbuf_size:
+          description: Desired mbufSize
+          type: integer
+          format: uint16
+        num_mbufs:
+          description: Number of mbufs per receive queue
+          type: integer
+          format: uint32
+        mbuf_cache:
+          description: Number of mbufs in mempool cache
+          type: integer
+          format: uint16
+          minimum: 0
+          maximum: 65535
+        tx_descs:
+          description: Number of transmit descriptors
+          type: integer
+          format: uint16
+          minimum: 0
+          maximum: 65535
+        rx_descs:
+          description: Number of receive descriptors
+          type: integer
+          format: uint16
+          minimum: 0
+          maximum: 65535
+        symmetric_RSS:
+          description: Enables symmetric RSS
+          type: boolean
+    InterfaceInfoList:
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/InterfaceInfo"
+    InterfaceInfo:
+      description: >-
+        The information known about this instance
+      properties:
+        name:
+          type: string
+        port_id:
+          type: integer
+          format: uint8
+          description: If this interface is a dpdk interface, this index represents it's dpdk port id
+        bus_address:
+          type: string
+        transport:
+          type: string
+          enum:
+            - Ethernet
+            - PCIe
+    SIEMConfig:
+      description:
+        Configuration for the SIEM service. If the value of the fields
+        are 0 then the application will use default values.
+      properties:
+        core:
+          type: integer
+          format: uint8
+          description: Core to run the SIEM thread on.
+        interval_ms:
+          type: integer
+          format: uint64
+          description: Interval in milliseconds in which the SIEM data is produced.
+    FlowManagerConfigList:
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/FlowManagerConfig"
+    FlowManagerConfig:
+      description:
+        Configuration for the Flow Manager service. If the value of the
+        fields are 0 then the application will use default values.
+      properties:
+        name:
+          type: string
+          description: the name of configuration.
+        num_flows:
+          type: integer
+          format: uint64
+          description: set the maximum number of concurrent flows to track.
+        num_buckets:
+          type: integer
+          format: uint64
+          description: set the number of hash buckets to be used by config.
+        burst:
+          type: integer
+          format: uint64
+          description: burst size
+        idle_timeout:
+          type: integer
+          format: uint64
+          description: Flow idle timeout in seconds.  If the flow is idle for longer than this value then flow is aged.
+        active_timeout:
+          type: integer
+          format: uint64
+          description: Flow lifetime timeout in seconds.  If the flow continues to be active beyond this value then flow is aged.
+    ExporterConfigList:
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ExporterConfig"
+    ExporterConfig:
+      description: Configuration for the Exporter service. If the value of the
+        fields are 0, the application will use default values.
+      properties:
+        name:
+          type: string
+        flow_managers:
+          type: array
+          items:
+            type: string
+          description: reference to a flow manager config object.
+    WorkerConfigList:
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/WorkerConfig"
+    WorkerConfig:
+      description:
+        Configuration for a worker. If the value of the fields are 0, the
+        application will use default values.
+      properties:
+        name:
+          type: string
+        flow_manager:
+          type: string
+          description: reference to a flow manager config object.
+        interface:
+          type: string
+          description: reference to an interface config object.
+        burst:
+          type: integer
+          format: uint16
+          description: burst size
+    PolicyConfig:
+      description:
+        Sets the configuration policy object. If the value of the fields are 0
+        then the application will use default values.
+      properties:
+        rule_count:
+          type: integer
+          format: uint32
+          description: maximum number of rules to be supported.
+        max_actions:
+          type: integer
+          format: uint8
+          description: maximum number of actions to be supported.
+    CoreConfigList:
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/CoreConfig"
+    CoreConfig:
+      description: Configuration of a single dataplane core.
+      properties:
+        name:
+          type: string
+        core:
+          type: integer
+          format: uint8
+          description: core id to run the referenced services on.
+        exporter:
+          type: string
+          description: reference to an exporter object. If none are provided,
+            no exporter will be configured on the given core.
+        flow_manager:
+          type: string
+          description: reference to a flow manager object. If none are provided,
+            no flow manager will be configured on the given core.
+        workers:
+          type: array
+          items:
+            type: string
+            description: Reference of a worker to be associated with a given core.
+    FloorplanConfig:
+      description: VX Floorplan Configuration
+      properties:
+        core_config:
+          type: array
+          items:
+            type: string
+            description: Reference of a core to be associated with the floorplan.
+    Info:
+      description: Service Information
+      properties:
+        arch:
+          description: Image Architecture
+          type: string
+        platform:
+          description: Image Platform
+          type: string
+        version:
+          description: Running Service Version Number
+          type: string
+        build:
+          description: Running Service Build Number
+          type: string
+        hash:
+          description: Running Service Hash
+          type: string
+        branch:
+          description: Running Service Branch
+          type: string
+        build_date:
+          description: Service Build Date
+          type: string
+    BPFList:
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/BPF"
+    BPF:
+      description: Defines a pre-processing fitler (BPF syntax) for every packet received by the SIA.
+      properties:
+        name:
+          type: string
+        priority:
+          type: integer
+          format: uint64
+          description: >
+            The priority of the BPF. The priority is used when prioritizing overlapping 
+            BPF filters where 0 is the lowest priority.
+        bpf:
+          type: string
+          description: The BPF as a string using the standard BPF format.
+        actions:
+          description: The list of associated actions
+          type: array
+          minItems: 1
+          items:
+            type: string
+            description: Name of an action to be associated with this rule
